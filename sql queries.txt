@@ -1,0 +1,43 @@
+NO JOIN
+SELECT
+	tpep_pickup_datetime,
+	tpep_dropoff_datetime,
+	total_amount,
+	CONCAT(zpu."Borough", ' / ', zpu."Zone") "pickup_loc",
+	CONCAT(zdo."Borough", ' / ', zdo."Zone") "dropoff_loc"
+FROM
+	yellow_taxi_data ytd,
+	zones zpu,
+	zones zdo
+WHERE
+	ytd."PULocationID" = zpu."LocationID" AND
+	ytd."DOLocationID" = zdo."LocationID"
+LIMIT 100;
+
+
+WITH JOIN
+SELECT
+	tpep_pickup_datetime,
+	tpep_dropoff_datetime,
+	total_amount,
+	CONCAT(zpu."Borough", ' / ', zpu."Zone") "pickup_loc",
+	CONCAT(zdo."Borough", ' / ', zdo."Zone") "dropoff_loc"
+FROM
+	yellow_taxi_data ytd 
+	JOIN zones zpu
+		ON ytd."PULocationID" = zpu."LocationID"
+	JOIN zones zdo
+		ON ytd."DOLocationID" = zdo."LocationID"
+LIMIT 100;
+
+
+SELECT
+	tpep_pickup_datetime,
+	tpep_dropoff_datetime,
+	CAST(tpep_dropoff_datetime AS DATE),
+	total_amount
+FROM
+	yellow_taxi_data ytd
+LIMIT 100;
+
+
